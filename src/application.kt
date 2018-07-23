@@ -1,5 +1,6 @@
 package io.igx.kotlin
 
+import com.google.gson.*
 import io.igx.kotlin.config.common
 import io.igx.kotlin.config.controllers
 import io.igx.kotlin.config.repositories
@@ -15,7 +16,10 @@ import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.singleton
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
+
 
 fun main(args: Array<String>){
 	embeddedServer(Netty, port = 8080) {
@@ -23,7 +27,7 @@ fun main(args: Array<String>){
 			application ->
 			application.install(ContentNegotiation) {
 				gson {
-					setDateFormat("yyy-MM-dd HH:mm:ss")
+					registerTypeAdapter(LocalDateTime::class.java, JsonSerializer<LocalDateTime> { src, typeOfSrc, context -> JsonPrimitive(src.format(DateTimeFormatter.ISO_DATE_TIME)) })
 				}
 			}
 			application.install(DefaultHeaders){
