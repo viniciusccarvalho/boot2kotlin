@@ -15,6 +15,7 @@ class CoinRepository(val client: MongoClient) {
     val collection: MongoCollection<Ticker> = client.getDatabase("kotlin").getCollection<Ticker>("coins")
 
     fun findInRange(symbol: String, start: LocalDateTime, end: LocalDateTime) : List<Ticker> {
-        return collection.find(Ticker::symbol eq symbol, Ticker::lastUpdated gt start, Ticker::lastUpdated lt end).sort(ascending(Ticker::lastUpdated)).toList()
+        return collection.find(Ticker::symbol eq symbol, Ticker::lastUpdated gt start, Ticker::lastUpdated lt end).sort(ascending(Ticker::lastUpdated))
+                .toCollection(mutableListOf())
     }
 }

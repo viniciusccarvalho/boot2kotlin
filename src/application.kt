@@ -27,7 +27,7 @@ fun main(args: Array<String>){
 			application ->
 			application.install(ContentNegotiation) {
 				gson {
-					registerTypeAdapter(LocalDateTime::class.java, JsonSerializer<LocalDateTime> { src, typeOfSrc, context -> JsonPrimitive(src.format(DateTimeFormatter.ISO_DATE_TIME)) })
+					registerTypeAdapter(LocalDateTime::class.java, JsonSerializer<LocalDateTime> { src, _, _ -> JsonPrimitive(src.format(DateTimeFormatter.ISO_DATE_TIME)) })
 				}
 			}
 			application.install(DefaultHeaders){
